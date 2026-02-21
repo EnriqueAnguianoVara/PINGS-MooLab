@@ -135,62 +135,73 @@ function toggleCb(el) {
 }
 
 // ================================================
-// FILTROS DE CALENDARIO
+// FILTROS DE CALENDARIO Y VISTAS
 // ================================================
 
-/**
- * Alterna el estado de un chip de filtro
- * @param {HTMLElement} el - Elemento chip
- */
-function toggleChip(el) {
-  el.classList.toggle('on');
-}
-
-/**
- * Filtra eventos del calendario por tipo
- * @param {HTMLElement} btn - Botón de filtro clickeado
- * @param {string} type - Tipo de evento (meeting, class, task)
- */
 function toggleFilter(btn, type) {
   btn.classList.toggle('on');
-  
-  // Obtener todos los eventos del tipo especificado
   const events = document.querySelectorAll(`.ev-${type}`);
-  
-  // Mostrar u ocultar según el estado del filtro
-  if (btn.classList.contains('on')) {
-    events.forEach(event => event.style.display = '');
-  } else {
-    events.forEach(event => event.style.display = 'none');
-  }
+  events.forEach(event => {
+    event.style.display = btn.classList.contains('on') ? '' : 'none';
+  });
 }
 
-/**
- * Cambia la vista del calendario (día/semana/mes)
- * @param {HTMLElement} btn - Botón de vista clickeado
- */
 function toggleViewFilter(btn) {
-  // Remover clase active de todos los botones de vista
-  document.querySelectorAll('.view-filter').forEach(b => {
+  const buttons = document.querySelectorAll('.view-filter');
+  buttons.forEach(b => {
+    b.classList.remove('active');
     b.style.background = 'var(--glass)';
     b.style.color = 'var(--text)';
     b.style.border = '1px solid var(--border)';
-    b.classList.remove('active');
   });
-  
-  // Activar el botón clickeado
+
+  btn.classList.add('active');
   btn.style.background = 'var(--amber)';
   btn.style.color = 'var(--navy)';
   btn.style.border = 'none';
-  btn.classList.add('active');
-  
-  // Obtener la vista seleccionada
+
   const view = btn.dataset.view;
-  console.log(`Vista del calendario cambiada a: ${view}`);
-  
-  // TODO: Implementar lógica para cambiar realmente la vista del calendario
+  const allDays = document.querySelectorAll('.cal-grid .cal-day');
+  const allHeaders = document.querySelectorAll('.cal-grid .cal-day-header');
+  const today = document.querySelector('.cal-day.today');
+
+  // Mostrar todos por defecto
+  allDays.forEach(day => day.classList.remove('hidden'));
+  allHeaders.forEach(header => header.classList.remove('hidden'));
+
+  if (!today) return;
+
+  if (view === 'day') {
+    const weekday = parseInt(today.dataset.weekday);
+    allDays.forEach(day => day.classList.add('hidden'));
+    today.classList.remove('hidden');
+
+    allHeaders.forEach(header => {
+      if (parseInt(header.dataset.weekday) !== weekday) {
+        header.classList.add('hidden');
+      }
+    });
+  } else if (view === 'week') {
+    const allDaysArr = Array.from(allDays);
+    const todayIndex = allDaysArr.indexOf(today);
+    const start = todayIndex - (todayIndex % 7);
+    const end = start + 7;
+    allDaysArr.forEach((day, i) => {
+      if (i < start || i >= end) day.classList.add('hidden');
+    });
+    allHeaders.forEach(header => header.classList.remove('hidden'));
+  } else if (view === 'month') {
+    // Todo visible
+    allDays.forEach(day => day.classList.remove('hidden'));
+    allHeaders.forEach(header => header.classList.remove('hidden'));
+  }
 }
 
+// Inicializar al cargar
+document.addEventListener('DOMContentLoaded', () => {
+  const monthBtn = document.querySelector('.view-filter[data-view="month"]');
+  if (monthBtn) toggleViewFilter(monthBtn);
+});
 // ================================================
 // CONTROLES DE SALA DE REUNIÓN
 // ================================================
