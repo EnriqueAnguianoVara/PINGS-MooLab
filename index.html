@@ -763,111 +763,146 @@
       </div>
     </div>
 
-<div class="view" id="view-calendar">
-  <div class="page-header">
-    <div>
-      <div class="page-title">Calendario</div>
-      <div class="page-sub">Tus clases, reuniones y entregas</div>
-    </div>
-    <button class="btn btn-primary" onclick="openMeetingModal()">+ Nueva Reunión</button>
-  </div>
-
-  <div class="cal-header">
-    <div class="cal-nav">
-      <button class="cal-nav-btn">◀</button>
-      <button class="cal-nav-btn">▶</button>
-    </div>
-    <span class="cal-month">Abril 2025</span>
-    <div class="cal-filters">
-      <button class="filter-chip chip-meeting on" onclick="toggleFilter(this, 'meeting')">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg> Reuniones
-      </button>
-      <button class="filter-chip chip-class on" onclick="toggleFilter(this, 'class')">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="18" height="18" rx="2"/></svg> Clases
-      </button>
-      <button class="filter-chip chip-task on" onclick="toggleFilter(this, 'task')">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> Entregas
-      </button>
-    </div>
-    <div style="display:flex;gap:4px;margin-left:8px">
-      <button class="filter-chip view-filter" data-view="day" onclick="toggleViewFilter(this)" style="background:var(--glass);color:var(--text);border:1px solid var(--border)">Día</button>
-      <button class="filter-chip view-filter" data-view="week" onclick="toggleViewFilter(this)" style="background:var(--glass);color:var(--text);border:1px solid var(--border)">Semana</button>
-      <button class="filter-chip view-filter active" data-view="month" onclick="toggleViewFilter(this)" style="background:var(--amber);color:var(--navy)">Mes</button>
-    </div>
-  </div>
-
-  <div class="cal-sidebar">
-    <div>
-      <div class="cal-grid">
-        <!-- HEADERS CON DATA-WEEKDAY -->
-        <div class="cal-day-header" data-weekday="0">Lun</div>
-        <div class="cal-day-header" data-weekday="1">Mar</div>
-        <div class="cal-day-header" data-weekday="2">Mié</div>
-        <div class="cal-day-header" data-weekday="3">Jue</div>
-        <div class="cal-day-header" data-weekday="4">Vie</div>
-        <div class="cal-day-header" data-weekday="5">Sáb</div>
-        <div class="cal-day-header" data-weekday="6">Dom</div>
-
-        <!-- SEMANA 1 -->
-        <div class="cal-day other-month" data-weekday="0"><div class="day-num">31</div></div>
-        <div class="cal-day" data-weekday="1"><div class="day-num">1</div></div>
-        <div class="cal-day" data-weekday="2"><div class="day-num">2</div><div class="cal-event ev-class">IS2 · A-201</div></div>
-        <div class="cal-day" data-weekday="3"><div class="day-num">3</div><div class="cal-event ev-class">BD · B-105</div><div class="cal-event ev-meeting">Reunión BD</div></div>
-        <div class="cal-day" data-weekday="4"><div class="day-num">4</div><div class="cal-event ev-task">P1 BD</div></div>
-        <div class="cal-day" data-weekday="5"><div class="day-num">5</div></div>
-        <div class="cal-day" data-weekday="6"><div class="day-num">6</div></div>
-
-        <!-- SEMANA 2 -->
-        <div class="cal-day" data-weekday="0"><div class="day-num">7</div><div class="cal-event ev-class">IS2 · A-201</div></div>
-        <div class="cal-day" data-weekday="1"><div class="day-num">8</div><div class="cal-event ev-meeting">Reunión IS2</div></div>
-        <div class="cal-day" data-weekday="2"><div class="day-num">9</div><div class="cal-event ev-class">IS2 · A-201</div></div>
-        <div class="cal-day" data-weekday="3"><div class="day-num">10</div></div>
-        <div class="cal-day" data-weekday="4"><div class="day-num">11</div></div>
-        <div class="cal-day" data-weekday="5"><div class="day-num">12</div></div>
-        <div class="cal-day" data-weekday="6"><div class="day-num">13</div></div>
-
-        <!-- SEMANA 3 -->
-        <div class="cal-day" data-weekday="0"><div class="day-num">14</div><div class="cal-event ev-class">BD · B-105</div></div>
-        <div class="cal-day" data-weekday="1"><div class="day-num">15</div><div class="cal-event ev-class">SI · C-011</div><div class="cal-event ev-meeting">Sprint IS2</div></div>
-        <div class="cal-day" data-weekday="2"><div class="day-num">16</div></div>
-        <div class="cal-day" data-weekday="3"><div class="day-num">17</div><div class="cal-event ev-class">IS2 · A-201</div></div>
-        <div class="cal-day" data-weekday="4"><div class="day-num">18</div><div class="cal-event ev-task">P2 BD</div></div>
-        <div class="cal-day" data-weekday="5"><div class="day-num">19</div></div>
-        <div class="cal-day" data-weekday="6"><div class="day-num">20</div></div>
-
-        <!-- SEMANA 4 (HOY = 21) -->
-        <div class="cal-day today" data-weekday="0">
-          <div class="day-num today-dot">21</div>
-          <div class="cal-event ev-meeting">17:00 Sprint Rev</div>
-          <div class="cal-event ev-meeting">19:00 Esquemas BD</div>
+    <!-- ══════════════════════════════════════════════════════════════════════════
+         VIEW: CALENDAR
+         ══════════════════════════════════════════════════════════════════════════ -->
+    <div class="view" id="view-calendar">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Calendario</div>
+          <div class="page-sub">Tus clases, reuniones y entregas</div>
         </div>
-        <div class="cal-day" data-weekday="1"><div class="day-num">22</div><div class="cal-event ev-class">SI · C-011</div></div>
-        <div class="cal-day" data-weekday="2"><div class="day-num">23</div><div class="cal-event ev-class">IS2 · A-201</div><div class="cal-event ev-meeting">Análisis SI</div></div>
-        <div class="cal-day" data-weekday="3"><div class="day-num">24</div><div class="cal-event ev-task">P3 IS2</div></div>
-        <div class="cal-day" data-weekday="4"><div class="day-num">25</div><div class="cal-event ev-class">BD · B-105</div></div>
-        <div class="cal-day" data-weekday="5"><div class="day-num">26</div></div>
-        <div class="cal-day" data-weekday="6"><div class="day-num">27</div></div>
+        <button class="btn btn-primary" onclick="openMeetingModal()">+ Nueva Reunión</button>
+      </div>
 
-        <!-- SEMANA 5 -->
-        <div class="cal-day" data-weekday="0"><div class="day-num">28</div><div class="cal-event ev-meeting">Revisión IS2</div></div>
-        <div class="cal-day" data-weekday="1"><div class="day-num">29</div><div class="cal-event ev-class">SI · C-011</div></div>
-        <div class="cal-day" data-weekday="2"><div class="day-num">30</div></div>
-        <div class="cal-day other-month" data-weekday="3"><div class="day-num">1</div></div>
-        <div class="cal-day other-month" data-weekday="4"><div class="day-num">2</div></div>
-        <div class="cal-day other-month" data-weekday="5"><div class="day-num">3</div></div>
-        <div class="cal-day other-month" data-weekday="6"><div class="day-num">4</div></div>
+      <div class="cal-header">
+        <div class="cal-nav">
+          <button class="cal-nav-btn">◀</button>
+          <button class="cal-nav-btn">▶</button>
+        </div>
+        <span class="cal-month">Abril 2025</span>
+        <div class="cal-filters">
+          <button class="filter-chip chip-meeting on" onclick="toggleFilter(this, 'meeting')"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg> Reuniones</button>
+          <button class="filter-chip chip-class on" onclick="toggleFilter(this, 'class')"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="18" height="18" rx="2"/></svg> Clases</button>
+          <button class="filter-chip chip-task on" onclick="toggleFilter(this, 'task')"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> Entregas</button>
+        </div>
+        <div style="display:flex;gap:4px;margin-left:8px">
+          <button class="filter-chip view-filter" data-view="day" onclick="toggleViewFilter(this)" style="background:var(--glass);color:var(--text);border:1px solid var(--border)">Día</button>
+          <button class="filter-chip view-filter" data-view="week" onclick="toggleViewFilter(this)" style="background:var(--glass);color:var(--text);border:1px solid var(--border)">Semana</button>
+          <button class="filter-chip view-filter active" data-view="month" onclick="toggleViewFilter(this)" style="background:var(--amber);color:var(--text)">Mes</button>
+        </div>
+      </div>
+
+      <div class="cal-sidebar">
+        <div>
+          <div class="cal-grid">
+            <div class="cal-day-header">Lun</div>
+            <div class="cal-day-header">Mar</div>
+            <div class="cal-day-header">Mié</div>
+            <div class="cal-day-header">Jue</div>
+            <div class="cal-day-header">Vie</div>
+            <div class="cal-day-header">Sáb</div>
+            <div class="cal-day-header">Dom</div>
+
+            <!-- SEMANA 1 -->
+            <div class="cal-day other-month"><div class="day-num">31</div></div>
+            <div class="cal-day"><div class="day-num">1</div></div>
+            <div class="cal-day"><div class="day-num">2</div><div class="cal-event ev-class">IS2 · A-201</div></div>
+            <div class="cal-day"><div class="day-num">3</div><div class="cal-event ev-class">BD · B-105</div><div class="cal-event ev-meeting">Reunión BD</div></div>
+            <div class="cal-day"><div class="day-num">4</div><div class="cal-event ev-task">P1 BD</div></div>
+            <div class="cal-day"><div class="day-num">5</div></div>
+            <div class="cal-day"><div class="day-num">6</div></div>
+
+            <!-- SEMANA 2 -->
+            <div class="cal-day"><div class="day-num">7</div><div class="cal-event ev-class">IS2 · A-201</div></div>
+            <div class="cal-day"><div class="day-num">8</div><div class="cal-event ev-meeting">Reunión IS2</div></div>
+            <div class="cal-day"><div class="day-num">9</div><div class="cal-event ev-class">IS2 · A-201</div></div>
+            <div class="cal-day"><div class="day-num">10</div></div>
+            <div class="cal-day"><div class="day-num">11</div></div>
+            <div class="cal-day"><div class="day-num">12</div></div>
+            <div class="cal-day"><div class="day-num">13</div></div>
+
+            <!-- SEMANA 3 -->
+            <div class="cal-day"><div class="day-num">14</div><div class="cal-event ev-class">BD · B-105</div></div>
+            <div class="cal-day"><div class="day-num">15</div><div class="cal-event ev-class">SI · C-011</div><div class="cal-event ev-meeting">Sprint IS2</div></div>
+            <div class="cal-day"><div class="day-num">16</div></div>
+            <div class="cal-day"><div class="day-num">17</div><div class="cal-event ev-class">IS2 · A-201</div></div>
+            <div class="cal-day"><div class="day-num">18</div><div class="cal-event ev-task">P2 BD</div></div>
+            <div class="cal-day"><div class="day-num">19</div></div>
+            <div class="cal-day"><div class="day-num">20</div></div>
+
+            <!-- SEMANA 4 (HOY = 21) -->
+            <div class="cal-day today">
+              <div class="day-num today-dot">21</div>
+              <div class="cal-event ev-meeting">17:00 Sprint Rev</div>
+              <div class="cal-event ev-meeting">19:00 Esquemas BD</div>
+            </div>
+            <div class="cal-day"><div class="day-num">22</div><div class="cal-event ev-class">SI · C-011</div></div>
+            <div class="cal-day"><div class="day-num">23</div><div class="cal-event ev-class">IS2 · A-201</div><div class="cal-event ev-meeting">Análisis SI</div></div>
+            <div class="cal-day"><div class="day-num">24</div><div class="cal-event ev-task">P3 IS2</div></div>
+            <div class="cal-day"><div class="day-num">25</div><div class="cal-event ev-class">BD · B-105</div></div>
+            <div class="cal-day"><div class="day-num">26</div></div>
+            <div class="cal-day"><div class="day-num">27</div></div>
+
+            <!-- SEMANA 5 -->
+            <div class="cal-day"><div class="day-num">28</div><div class="cal-event ev-meeting">Revisión IS2</div></div>
+            <div class="cal-day"><div class="day-num">29</div><div class="cal-event ev-class">SI · C-011</div></div>
+            <div class="cal-day"><div class="day-num">30</div></div>
+            <div class="cal-day other-month"><div class="day-num">1</div></div>
+            <div class="cal-day other-month"><div class="day-num">2</div></div>
+            <div class="cal-day other-month"><div class="day-num">3</div></div>
+            <div class="cal-day other-month"><div class="day-num">4</div></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">HOY — 21 DE ABRIL</div>
+          <div class="agenda-list">
+            <div class="agenda-item">
+              <div class="agenda-time">09:00</div>
+              <div class="agenda-bar bar-class"></div>
+              <div class="agenda-info">
+                <div class="agenda-title">IS2 — Clase</div>
+                <div class="agenda-meta">Aula A-201 · Prof. García</div>
+              </div>
+            </div>
+            <div class="agenda-item">
+              <div class="agenda-time">11:00</div>
+              <div class="agenda-bar bar-class"></div>
+              <div class="agenda-info">
+                <div class="agenda-title">BD — Práctica</div>
+                <div class="agenda-meta">Lab B-105 · Prof. Martínez</div>
+              </div>
+            </div>
+            <div class="agenda-item" style="cursor:pointer;border-radius:8px;padding:12px;margin:0 -12px;position:relative" onmouseover="this.style.background='var(--glass)'" onmouseout="this.style.background='transparent'">
+              <div class="agenda-time">17:00</div>
+              <div class="agenda-bar bar-meeting"></div>
+              <div class="agenda-info">
+                <div class="agenda-title">Sprint Review — Sistema Académico</div>
+                <div class="agenda-meta">IS2_G2_E4 · 1h</div>
+              </div>
+              <div style="position:absolute;right:8px;top:50%;transform:translateY(-50%);display:flex;gap:4px">
+                <button class="btn btn-sm btn-outline" style="padding:4px 8px;font-size:10px" onclick="event.stopPropagation();setView('meeting')" title="Unirse"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></button>
+                <button class="btn btn-sm btn-outline" style="padding:4px 8px;font-size:10px;color:var(--rose)" onclick="event.stopPropagation();openModal('cancelMeetingModal')" title="Cancelar">×</button>
+              </div>
+            </div>
+            <div class="agenda-item" style="cursor:pointer;border-radius:8px;padding:12px;margin:0 -12px;position:relative" onmouseover="this.style.background='var(--glass)'" onmouseout="this.style.background='transparent'">
+              <div class="agenda-time">19:00</div>
+              <div class="agenda-bar bar-meeting"></div>
+              <div class="agenda-info">
+                <div class="agenda-title">Normalización BD Biblioteca</div>
+                <div class="agenda-meta">BD_G1_E2 · 45min</div>
+              </div>
+              <div style="position:absolute;right:8px;top:50%;transform:translateY(-50%);display:flex;gap:4px">
+                <button class="btn btn-sm btn-outline" style="padding:4px 8px;font-size:10px" onclick="event.stopPropagation()" title="Unirse"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></button>
+                <button class="btn btn-sm btn-outline" style="padding:4px 8px;font-size:10px;color:var(--rose)" onclick="event.stopPropagation();openModal('cancelMeetingModal')" title="Cancelar">×</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- AGENDA DEL DÍA -->
-    <div class="card">
-      <div class="card-title">HOY — 21 DE ABRIL</div>
-      <div class="agenda-list">
-        <!-- aquí tus agenda-items existentes -->
-      </div>
-    </div>
-  </div>
-</div>
     <!-- ══════════════════════════════════════════════════════════════════════════
          VIEW: REPOSITORY
          ══════════════════════════════════════════════════════════════════════════ -->
@@ -1249,7 +1284,7 @@
               <div style="font-size:12px;padding:8px;background:var(--slate);border-radius:6px">
                 <div style="color:var(--amber);font-weight:600;margin-bottom:2px">Recordatorio</div>
                 Entrega P3 en 4 días — 25 de abril
-              </div>
+              </div>a
             </div>
           </div>
         </div>
