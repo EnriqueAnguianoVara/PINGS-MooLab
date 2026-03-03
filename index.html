@@ -360,6 +360,72 @@
   </div>
 </div>
 
+<!-- MODAL: Invitar Estudiante Externo -->
+<div class="modal-overlay" id="inviteExternalModal">
+  <div class="modal">
+    <div class="modal-title">Invitar Estudiante Externo</div>
+    <div style="padding:10px;background:rgba(245,158,11,0.1);border-radius:8px;font-size:11px;margin-bottom:16px;display:flex;gap:8px;align-items:flex-start">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" style="flex-shrink:0;margin-top:1px"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <span>Invitas a un estudiante <strong>fuera del Grupo 2 de IS2</strong>. La incorporación requiere aprobación del profesor.</span>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Buscar estudiante</label>
+      <input class="form-input" id="externalSearchInput" placeholder="Nombre o correo @estudiante.uam.es..." oninput="filterExternalStudents(this.value)" />
+    </div>
+    <div id="externalStudentResults" style="display:flex;flex-direction:column;gap:6px;max-height:180px;overflow-y:auto;margin-top:4px">
+      <div class="external-student-item" data-name="Carlos Méndez" data-email="carlos.mendez@estudiante.uam.es" data-group="IS2 · Grupo 3" onclick="selectExternalStudent(this)" style="display:flex;gap:10px;align-items:center;padding:10px;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all 0.15s">
+        <div class="member-av-big" style="background:linear-gradient(135deg,#f59e0b,#b45309);width:30px;height:30px;min-width:30px;font-size:11px;border-radius:50%">CM</div>
+        <div><div style="font-size:13px;font-weight:500">Carlos Méndez</div><div style="font-size:10px;color:var(--muted)">carlos.mendez@estudiante.uam.es · IS2 Grupo 3</div></div>
+      </div>
+      <div class="external-student-item" data-name="Laura Sanz" data-email="laura.sanz@estudiante.uam.es" data-group="IS2 · Grupo 1" onclick="selectExternalStudent(this)" style="display:flex;gap:10px;align-items:center;padding:10px;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all 0.15s">
+        <div class="member-av-big" style="background:linear-gradient(135deg,#8b5cf6,#5b21b6);width:30px;height:30px;min-width:30px;font-size:11px;border-radius:50%">LS</div>
+        <div><div style="font-size:13px;font-weight:500">Laura Sanz</div><div style="font-size:10px;color:var(--muted)">laura.sanz@estudiante.uam.es · IS2 Grupo 1</div></div>
+      </div>
+      <div class="external-student-item" data-name="Miguel Torres" data-email="miguel.torres@estudiante.uam.es" data-group="IS2 · Grupo 4" onclick="selectExternalStudent(this)" style="display:flex;gap:10px;align-items:center;padding:10px;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all 0.15s">
+        <div class="member-av-big" style="background:linear-gradient(135deg,#ec4899,#9d174d);width:30px;height:30px;min-width:30px;font-size:11px;border-radius:50%">MT</div>
+        <div><div style="font-size:13px;font-weight:500">Miguel Torres</div><div style="font-size:10px;color:var(--muted)">miguel.torres@estudiante.uam.es · IS2 Grupo 4</div></div>
+      </div>
+      <div class="external-student-item" data-name="Sofía Navarro" data-email="sofia.navarro@estudiante.uam.es" data-group="IS2 · Grupo 3" onclick="selectExternalStudent(this)" style="display:flex;gap:10px;align-items:center;padding:10px;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all 0.15s">
+        <div class="member-av-big" style="background:linear-gradient(135deg,var(--teal),#1a7a72);width:30px;height:30px;min-width:30px;font-size:11px;border-radius:50%">SN</div>
+        <div><div style="font-size:13px;font-weight:500">Sofía Navarro</div><div style="font-size:10px;color:var(--muted)">sofia.navarro@estudiante.uam.es · IS2 Grupo 3</div></div>
+      </div>
+    </div>
+    <div id="externalStudentSelected" style="display:none;padding:8px 12px;background:rgba(59,130,246,0.1);border-radius:8px;margin-top:10px;font-size:12px;border:1px solid rgba(59,130,246,0.3)">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="3" style="display:inline;margin-right:6px"><polyline points="20 6 9 17 4 12"/></svg>Seleccionado: <strong id="selectedStudentName"></strong>
+    </div>
+    <div class="form-group" style="margin-top:14px">
+      <label class="form-label">Mensaje de invitación (opcional)</label>
+      <input class="form-input" placeholder="Ej: Necesitamos alguien con experiencia en backend..." />
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('inviteExternalModal')">Cancelar</button>
+      <button class="btn btn-primary" onclick="closeModal('inviteExternalModal')">Enviar solicitud al profesor</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Detalle de Reunión (Futura / Pasada) -->
+<div class="modal-overlay" id="meetingDetailModal">
+  <div class="modal">
+    <div class="modal-title" id="mdTitle"></div>
+    <div id="mdMeta" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:18px;font-size:12px;color:var(--muted)"></div>
+    <!-- FUTURO: objetivos con fecha/hora -->
+    <div id="mdFutureSection">
+      <div class="card-title" style="margin-bottom:10px">OBJETIVOS DE LA REUNIÓN</div>
+      <div id="mdObjectives" style="display:flex;flex-direction:column;gap:8px"></div>
+    </div>
+    <!-- PASADO: checklist realizado -->
+    <div id="mdPastSection" style="display:none">
+      <div class="card-title" style="margin-bottom:10px">CHECKLIST REALIZADO</div>
+      <div id="mdChecklist" style="display:flex;flex-direction:column;gap:8px"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('meetingDetailModal')">Cerrar</button>
+      <button class="btn btn-primary" id="mdJoinBtn" onclick="setView('meeting',null,null);closeModal('meetingDetailModal')">Unirse a la reunión</button>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL: Permiso Grabación -->
 <div class="modal-overlay" id="recordPermissionModal">
   <div class="modal">
@@ -666,7 +732,7 @@
               <div class="meeting-title">Sprint Review — Sistema Académico</div>
               <div class="meeting-meta">IS2_G2_E4 · 1h estimada · 4 asistentes</div>
             </div>
-            <button class="meeting-join" onclick="setView('meeting')">Unirse</button>
+            <button class="meeting-join" onclick="openMeetingDetail(true,'Sprint Review — Sistema Académico','Lun 21 abr 2025 · 17:00 – 18:00 · IS2_G2_E4',['Revisión de mockups de pantallas principales','Validación del diagrama de clases','Reparto de tareas para la entrega del 25 de abril','Redacción del acta de reunión','Decisión sobre arquitectura del sistema'])">Unirse</button>
           </div>
           <div class="meeting-item">
             <div class="meeting-time"><strong>19:00</strong>Hoy</div>
@@ -674,7 +740,7 @@
               <div class="meeting-title">Normalización Base de Datos Biblioteca</div>
               <div class="meeting-meta">BD_G1_E2 · 45min estimada · 3 asistentes</div>
             </div>
-            <button class="meeting-join">Unirse</button>
+            <button class="meeting-join" onclick="openMeetingDetail(true,'Normalización Base de Datos Biblioteca','Lun 21 abr 2025 · 19:00 – 19:45 · BD_G1_E2',['Revisar normalización hasta 3FN','Definir claves primarias y foráneas','Discutir índices para optimización de consultas'])">Unirse</button>
           </div>
           <div class="meeting-item">
             <div class="meeting-time"><strong>16:00</strong>Mié</div>
@@ -682,7 +748,7 @@
               <div class="meeting-title">Análisis de Vulnerabilidades</div>
               <div class="meeting-meta">SI_G3_E1 · 30min · 3 asistentes</div>
             </div>
-            <button class="meeting-join">Unirse</button>
+            <button class="meeting-join" onclick="openMeetingDetail(true,'Análisis de Vulnerabilidades','Mié 23 abr 2025 · 16:00 – 16:30 · SI_G3_E1',['Repaso de vulnerabilidades detectadas en la auditoría','Priorizar correcciones por criticidad','Distribución del informe final de seguridad'])">Unirse</button>
           </div>
         </div>
 
@@ -882,7 +948,7 @@
                 <div class="agenda-meta">IS2_G2_E4 · 1h</div>
               </div>
               <div style="position:absolute;right:8px;top:50%;transform:translateY(-50%);display:flex;gap:4px">
-                <button class="btn btn-sm btn-outline" style="padding:4px 8px;font-size:10px" onclick="event.stopPropagation();setView('meeting')" title="Unirse"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></button>
+                <button class="btn btn-sm btn-outline" style="padding:4px 8px;font-size:10px" onclick="event.stopPropagation();openMeetingDetail(true,'Sprint Review — Sistema Académico','Lun 21 abr 2025 · 17:00 – 18:00 · IS2_G2_E4',['Revisión de mockups de pantallas principales','Validación del diagrama de clases','Reparto de tareas para la entrega del 25 de abril','Redacción del acta de reunión','Decisión sobre arquitectura del sistema'])" title="Unirse"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></button>
                 <button class="btn btn-sm btn-outline" style="padding:4px 8px;font-size:10px;color:var(--rose)" onclick="event.stopPropagation();openModal('cancelMeetingModal')" title="Cancelar">×</button>
               </div>
             </div>
@@ -894,7 +960,7 @@
                 <div class="agenda-meta">BD_G1_E2 · 45min</div>
               </div>
               <div style="position:absolute;right:8px;top:50%;transform:translateY(-50%);display:flex;gap:4px">
-                <button class="btn btn-sm btn-outline" style="padding:4px 8px;font-size:10px" onclick="event.stopPropagation()" title="Unirse"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></button>
+                <button class="btn btn-sm btn-outline" style="padding:4px 8px;font-size:10px" onclick="event.stopPropagation();openMeetingDetail(true,'Normalización BD Biblioteca','Lun 21 abr 2025 · 19:00 – 19:45 · BD_G1_E2',['Revisar normalización hasta 3FN','Definir claves primarias y foráneas','Discutir índices para optimización de consultas'])" title="Unirse"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></button>
                 <button class="btn btn-sm btn-outline" style="padding:4px 8px;font-size:10px;color:var(--rose)" onclick="event.stopPropagation();openModal('cancelMeetingModal')" title="Cancelar">×</button>
               </div>
             </div>
@@ -1174,7 +1240,13 @@
       <div class="team-detail">
         <div>
           <div class="card" style="margin-bottom:16px">
-            <div class="card-title">MIEMBROS DEL EQUIPO</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+              <div class="card-title" style="margin:0">MIEMBROS DEL EQUIPO</div>
+              <button class="btn btn-sm btn-outline" onclick="openModal('inviteExternalModal')" style="font-size:11px;display:flex;align-items:center;gap:5px">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+                Invitar externo
+              </button>
+            </div>
             <div class="member-row">
               <div class="member-av-big" style="background:linear-gradient(135deg,var(--amber),#1e40af)">AC</div>
               <div class="member-info">
@@ -1228,19 +1300,19 @@
           <div class="card">
             <div class="card-title">LOG DE REUNIONES</div>
             <div class="file-list">
-              <div class="file-row">
+              <div class="file-row" style="cursor:pointer" title="Ver detalles" onmouseover="this.style.background='var(--glass)'" onmouseout="this.style.background=''" onclick="openMeetingDetail(false,'Análisis inicial P3','14 abr 2025 · 17:00 – 18:00 · IS2_G2_E4',['Revisión de requisitos funcionales del sistema','Identificación de casos de uso principales','Reparto de responsabilidades entre miembros','Establecimiento de hitos para la práctica','Decisión sobre stack tecnológico'])">
                 <div class="file-icon-sm">✅</div>
                 <div class="file-name-sm">REU_14-04-2025 — Análisis inicial P3</div>
                 <div style="font-size:11px;color:var(--muted)">4/4 asistentes</div>
                 <div class="file-date">14 abr</div>
               </div>
-              <div class="file-row">
+              <div class="file-row" style="cursor:pointer" title="Ver detalles" onmouseover="this.style.background='var(--glass)'" onmouseout="this.style.background=''" onclick="openMeetingDetail(false,'Kick-off P3','7 abr 2025 · 17:00 – 17:30 · IS2_G2_E4',['Lectura del enunciado de la práctica','Comprensión de los objetivos del proyecto','División inicial del trabajo','Fijación de la siguiente reunión'])">
                 <div class="file-icon-sm">✅</div>
                 <div class="file-name-sm">REU_07-04-2025 — Kick-off P3</div>
                 <div style="font-size:11px;color:var(--muted)">3/4 asistentes</div>
                 <div class="file-date">7 abr</div>
               </div>
-              <div class="file-row">
+              <div class="file-row" style="cursor:pointer" title="Ver detalles" onmouseover="this.style.background='var(--glass)'" onmouseout="this.style.background=''" onclick="openMeetingDetail(true,'Sprint Review — Sistema Académico','Lun 21 abr 2025 · 17:00 – 18:00 · IS2_G2_E4',['Revisión de mockups de pantallas principales','Validación del diagrama de clases','Reparto de tareas para la entrega del 25 de abril','Redacción del acta de reunión','Decisión sobre arquitectura del sistema'])">
                 <div class="file-icon-sm">⏺</div>
                 <div class="file-name-sm">REU_21-04-2025 — Sprint Review P3</div>
                 <div style="font-size:11px;color:var(--green)">En curso</div>
@@ -1269,7 +1341,7 @@
             <div style="font-size:13px;color:var(--muted);margin-bottom:10px">Prof. García — IS2</div>
             <div style="display:flex;flex-direction:column;gap:8px">
               <button class="btn btn-outline" style="font-size:12px;width:100%;text-align:left"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;margin-right:6px"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Abrir chat</button>
-              <button class="btn btn-outline" style="font-size:12px;width:100%;text-align:left"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;margin-right:6px"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg> Videollamada</button>
+              <button class="btn btn-outline" style="font-size:12px;width:100%;text-align:left" onclick="openMeetingDetail(true,'Videollamada con Prof. García','Próxima cita disponible · IS2_G2_E4',['Revisión del avance de la Práctica 3','Preguntas sobre los requisitos de entrega','Feedback sobre el diagrama de clases','Aclaración de criterios de evaluación'])"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;margin-right:6px"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg> Videollamada</button>
               <button class="btn btn-outline" style="font-size:12px;width:100%;text-align:left" onclick="openModal('reportIncidentModal')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;margin-right:6px"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Reportar incidencia</button>
             </div>
           </div>

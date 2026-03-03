@@ -75,6 +75,112 @@ document.querySelectorAll('.modal-overlay').forEach(overlay => {
   });
 });
 
+// ================================================
+// DETALLE DE REUNIÓN (FUTURO / PASADO)
+// ================================================
+
+/**
+ * Abre el modal de detalle de reunión.
+ * @param {boolean} isFuture - true si la reunión es futura/en curso, false si es pasada
+ * @param {string} title - Título de la reunión
+ * @param {string} meta - Cadena con fecha, hora y equipo
+ * @param {string[]} items - Objetivos (futuro) o ítems de checklist completados (pasado)
+ */
+function openMeetingDetail(isFuture, title, meta, items) {
+  document.getElementById('mdTitle').textContent = title;
+
+  // Meta con iconos de fecha/equipo
+  document.getElementById('mdMeta').innerHTML =
+    `<span style="display:flex;align-items:center;gap:5px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>${meta}</span>`;
+
+  const futureSection = document.getElementById('mdFutureSection');
+  const pastSection   = document.getElementById('mdPastSection');
+  const joinBtn       = document.getElementById('mdJoinBtn');
+
+  if (isFuture) {
+    futureSection.style.display = '';
+    pastSection.style.display   = 'none';
+    joinBtn.style.display       = '';
+    document.getElementById('mdObjectives').innerHTML = items.map(item =>
+      `<div style="display:flex;gap:10px;align-items:flex-start;padding:9px 12px;background:var(--slate);border-radius:6px">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span style="font-size:13px">${item}</span>
+      </div>`
+    ).join('');
+  } else {
+    futureSection.style.display = 'none';
+    pastSection.style.display   = '';
+    joinBtn.style.display       = 'none';
+    document.getElementById('mdChecklist').innerHTML = items.map(item =>
+      `<div style="display:flex;gap:10px;align-items:flex-start;padding:9px 12px;background:var(--slate);border-radius:6px">
+        <div style="width:16px;height:16px;min-width:16px;background:var(--green);border-radius:3px;display:flex;align-items:center;justify-content:center;margin-top:1px">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <span style="font-size:13px;text-decoration:line-through;color:var(--muted)">${item}</span>
+      </div>`
+    ).join('');
+  }
+
+  openModal('meetingDetailModal');
+}
+
+// ================================================
+// INVITAR ESTUDIANTE EXTERNO
+// ================================================
+
+/**
+ * Filtra la lista de estudiantes externos según la búsqueda
+ * @param {string} query - Texto de búsqueda
+ */
+function filterExternalStudents(query) {
+  const items = document.querySelectorAll('.external-student-item');
+  const q = query.toLowerCase().trim();
+  items.forEach(item => {
+    const name  = item.dataset.name.toLowerCase();
+    const email = item.dataset.email.toLowerCase();
+    item.style.display = (!q || name.includes(q) || email.includes(q)) ? '' : 'none';
+  });
+}
+
+/**
+ * Selecciona un estudiante externo de la lista
+ * @param {HTMLElement} el - Elemento de la lista seleccionado
+ */
+function selectExternalStudent(el) {
+  // Restablecer estilo de todos
+  document.querySelectorAll('.external-student-item').forEach(item => {
+    item.style.background   = '';
+    item.style.borderColor  = 'var(--border)';
+  });
+  // Resaltar el seleccionado
+  el.style.background  = 'rgba(59,130,246,0.08)';
+  el.style.borderColor = 'var(--amber)';
+
+  const selectedDiv = document.getElementById('externalStudentSelected');
+  selectedDiv.style.display = '';
+  document.getElementById('selectedStudentName').textContent =
+    el.dataset.name + '  ·  ' + el.dataset.group;
+}
+
+// Limpiar estado del modal al cerrarlo
+document.addEventListener('DOMContentLoaded', function() {
+  const inviteModal = document.getElementById('inviteExternalModal');
+  if (inviteModal) {
+    inviteModal.addEventListener('click', function(e) {
+      if (e.target === this) {
+        // Reset al cerrar por overlay
+        document.getElementById('externalSearchInput').value = '';
+        filterExternalStudents('');
+        document.getElementById('externalStudentSelected').style.display = 'none';
+        document.querySelectorAll('.external-student-item').forEach(item => {
+          item.style.background  = '';
+          item.style.borderColor = 'var(--border)';
+        });
+      }
+    });
+  }
+});
+
 // Alias para compatibilidad con código antiguo
 function openMeetingModal() { 
   openModal('meetingModal'); 
