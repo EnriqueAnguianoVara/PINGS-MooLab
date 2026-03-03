@@ -364,10 +364,6 @@
 <div class="modal-overlay" id="inviteExternalModal">
   <div class="modal">
     <div class="modal-title">Invitar Estudiante Externo</div>
-    <div style="padding:10px;background:rgba(245,158,11,0.1);border-radius:8px;font-size:11px;margin-bottom:16px;display:flex;gap:8px;align-items:flex-start">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" style="flex-shrink:0;margin-top:1px"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-      <span>Invitas a un estudiante <strong>fuera del Grupo 2 de IS2</strong>. La incorporación requiere aprobación del profesor.</span>
-    </div>
     <div class="form-group">
       <label class="form-label">Buscar estudiante</label>
       <input class="form-input" id="externalSearchInput" placeholder="Nombre o correo @estudiante.uam.es..." oninput="filterExternalStudents(this.value)" />
@@ -399,7 +395,7 @@
     </div>
     <div class="modal-footer">
       <button class="btn btn-outline" onclick="closeModal('inviteExternalModal')">Cancelar</button>
-      <button class="btn btn-primary" onclick="closeModal('inviteExternalModal')">Enviar solicitud al profesor</button>
+      <button class="btn btn-primary" onclick="closeModal('inviteExternalModal')">Enviar solicitud</button>
     </div>
   </div>
 </div>
